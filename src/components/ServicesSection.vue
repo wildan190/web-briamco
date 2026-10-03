@@ -9,10 +9,38 @@ interface ServiceItem {
   features: string[]
   img1: string
   img2: string
+  photo1: string
+  photo2: string
 }
 
 const activeTab = ref(0)
 const activeSlide = ref(0)
+
+// Curated Unsplash tech photos — shared across service slots
+const techPhotos = {
+  cloud1: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=700&q=80',
+  cloud2: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=700&q=80',
+  devops1: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=700&q=80',
+  devops2: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=700&q=80',
+  security1: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=700&q=80',
+  security2: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=700&q=80',
+  software1: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=700&q=80',
+  software2: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=700&q=80',
+  mobile1: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=700&q=80',
+  mobile2: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?auto=format&fit=crop&w=700&q=80',
+  db1: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80',
+  db2: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=700&q=80',
+  api1: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=700&q=80',
+  api2: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=700&q=80',
+  ai1: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=700&q=80',
+  ai2: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=700&q=80',
+  data1: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80',
+  data2: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=700&q=80',
+  ml1: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=80',
+  ml2: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&w=700&q=80',
+  gov1: 'https://images.unsplash.com/photo-1560472355-536de3962603?auto=format&fit=crop&w=700&q=80',
+  gov2: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=700&q=80',
+}
 
 const tabs = [
   {
@@ -27,6 +55,8 @@ const tabs = [
         features: ['Multi-Cloud AWS, Azure & GCP Architecture', 'Kubernetes & Container Orchestration', 'Automated Infrastructure as Code (Terraform)'],
         img1: 'Cloud architects designing distributed infrastructure roadmap',
         img2: 'DevOps team managing multi-region server cluster monitoring',
+        photo1: techPhotos.cloud1,
+        photo2: techPhotos.cloud2,
       },
       {
         icon: 'bar-chart',
@@ -35,6 +65,8 @@ const tabs = [
         features: ['Continuous Integration & Deployment (CI/CD)', 'GitOps & Zero-Downtime Rollouts', 'Observability, Tracing & APM Systems'],
         img1: 'Engineers configuring automated deployment pipelines',
         img2: 'Site reliability engineering team monitoring production telemetry',
+        photo1: techPhotos.devops1,
+        photo2: techPhotos.devops2,
       },
       {
         icon: 'target',
@@ -43,6 +75,8 @@ const tabs = [
         features: ['Zero-Trust Network Access & IAM', 'SOC2, ISO 27001 & GDPR Compliance', '24/7 Security Operations & Incident Response'],
         img1: 'Cybersecurity analysts reviewing threat detection dashboard',
         img2: 'Security engineers conducting automated penetration tests',
+        photo1: techPhotos.security1,
+        photo2: techPhotos.security2,
       },
     ],
   },
@@ -58,6 +92,8 @@ const tabs = [
         features: ['Microservices & Event-Driven Architecture', 'High-Throughput REST & GraphQL APIs', 'Modern Reactive Web Applications (Vue, React)'],
         img1: 'Software engineering team collaborating on distributed systems',
         img2: 'Full-stack developers reviewing clean code and testing suites',
+        photo1: techPhotos.software1,
+        photo2: techPhotos.software2,
       },
       {
         icon: 'smartphone',
@@ -66,6 +102,8 @@ const tabs = [
         features: ['Native & Cross-Platform Mobile Engineering', 'Offline-First Synchronization & Caching', 'Enterprise Mobile Security & MDM'],
         img1: 'Mobile developers testing interactive iOS and Android UI',
         img2: 'App engineers inspecting real-time mobile performance diagnostics',
+        photo1: techPhotos.mobile1,
+        photo2: techPhotos.mobile2,
       },
       {
         icon: 'database',
@@ -74,6 +112,8 @@ const tabs = [
         features: ['Monolith to Microservices Deconstruction', 'Automated CI/CD Migration Pipelines', 'Database Schema Modernization & Zero-Downtime Cuts'],
         img1: 'System architects diagramming database modernization paths',
         img2: 'Senior engineers performing zero-downtime database cutover',
+        photo1: techPhotos.db1,
+        photo2: techPhotos.db2,
       },
       {
         icon: 'settings',
@@ -82,6 +122,8 @@ const tabs = [
         features: ['High-Concurrency Message Brokers (Kafka, RabbitMQ)', 'Enterprise ERP & CRM Integration Connectors', 'Secure Webhook Gateways & Rate Limiting'],
         img1: 'Integration developers debugging webhook stream monitoring',
         img2: 'Cloud architects inspecting enterprise API gateway traffic',
+        photo1: techPhotos.api1,
+        photo2: techPhotos.api2,
       },
     ],
   },
@@ -97,6 +139,8 @@ const tabs = [
         features: ['Production RAG & Vector Database Search', 'Private LLM Fine-Tuning & Self-Hosting', 'Enterprise Guardrails, Privacy & Token Cost Optimization'],
         img1: 'AI researchers evaluating LLM prompt orchestration pipelines',
         img2: 'Machine learning engineers running vector search benchmarks',
+        photo1: techPhotos.ai1,
+        photo2: techPhotos.ai2,
       },
       {
         icon: 'bar-chart',
@@ -105,6 +149,8 @@ const tabs = [
         features: ['Real-Time Stream Processing (Apache Flink, Kafka)', 'Snowflake, BigQuery & Databricks Modern Data Lakes', 'Automated dbt Modeling & Data Quality Validation'],
         img1: 'Data engineers configuring real-time ETL streaming pipelines',
         img2: 'Analytics team reviewing Snowflake warehouse query performance',
+        photo1: techPhotos.data1,
+        photo2: techPhotos.data2,
       },
       {
         icon: 'target',
@@ -113,6 +159,8 @@ const tabs = [
         features: ['Customer Churn & Demand Forecasting Models', 'Automated CI/CD for Machine Learning (MLOps)', 'Real-Time Inference Serving & Drift Monitoring'],
         img1: 'Data scientists validating predictive model precision curves',
         img2: 'MLOps engineer deploying containerized model inference workers',
+        photo1: techPhotos.ml1,
+        photo2: techPhotos.ml2,
       },
       {
         icon: 'shield',
@@ -121,6 +169,8 @@ const tabs = [
         features: ['Automated PII Redaction & Data Masking', 'Role-Based Data Access Controls & Auditing', 'GDPR, HIPAA & SOC2 Compliant Data Topologies'],
         img1: 'Data governance officers reviewing data lineage catalog',
         img2: 'Compliance team reviewing automated privacy audit logs',
+        photo1: techPhotos.gov1,
+        photo2: techPhotos.gov2,
       },
     ],
   },
@@ -215,7 +265,7 @@ function nextSlide() {
               </div>
             </a>
             <div class="services__panel-img-sm">
-              <img src="" :alt="currentService.img1" />
+              <img :src="currentService.photo1" :alt="currentService.img1" />
               <div class="services__panel-img-bg services__panel-img-bg--1"></div>
             </div>
           </div>
@@ -224,7 +274,7 @@ function nextSlide() {
         <!-- Right: large image + nav arrows -->
         <div class="services__panel-right">
           <div class="services__panel-img-lg" :key="currentService.img2">
-            <img src="" :alt="currentService.img2" />
+            <img :src="currentService.photo2" :alt="currentService.img2" />
             <div class="services__panel-img-bg services__panel-img-bg--2"></div>
           </div>
           <div class="services__panel-nav">
@@ -505,9 +555,12 @@ function nextSlide() {
 }
 
 .services__panel-img-sm img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 1;
 }
 
 /* Right */
@@ -533,19 +586,22 @@ function nextSlide() {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 1;
 }
 
 .services__panel-img-bg {
   position: absolute;
   inset: 0;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .services__panel-img-bg--1 {
-  background: linear-gradient(135deg, #1a2e44 0%, #2a4a7a 100%);
+  background: linear-gradient(to bottom, rgba(13,27,42,0.10) 0%, rgba(13,27,42,0.45) 100%);
 }
 
 .services__panel-img-bg--2 {
-  background: linear-gradient(160deg, #0d1b2a 0%, #1e3a5f 60%, #2563eb22 100%);
+  background: linear-gradient(to bottom, rgba(13,27,42,0.08) 0%, rgba(37,99,235,0.18) 100%);
 }
 
 /* Nav arrows */

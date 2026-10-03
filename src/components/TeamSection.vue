@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const team = [
-  { name: 'Jonathan Lee', role: 'Chief Technology Officer', initials: 'JL', color: '#0d1b2a', img: 'Executive portrait of Jonathan Lee CTO' },
-  { name: 'Maria Santos', role: 'VP of Platform Engineering', initials: 'MS', color: '#1e3a5f', img: 'Professional portrait of Maria Santos VP Engineering' },
-  { name: 'Alex Kim', role: 'Principal Cloud Architect', initials: 'AK', color: '#2563eb', img: 'Professional headshot of Alex Kim Cloud Architect' },
-  { name: 'Priya Sharma', role: 'Head of AI & Machine Learning', initials: 'PS', color: '#1a2e44', img: 'Professional portrait of Priya Sharma AI Head' },
+  { name: 'Jonathan Lee', role: 'Chief Technology Officer', initials: 'JL', color: '#0d1b2a', img: 'Executive portrait of Jonathan Lee CTO', photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80' },
+  { name: 'Maria Santos', role: 'VP of Platform Engineering', initials: 'MS', color: '#1e3a5f', img: 'Professional portrait of Maria Santos VP Engineering', photo: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80' },
+  { name: 'Alex Kim', role: 'Principal Cloud Architect', initials: 'AK', color: '#2563eb', img: 'Professional headshot of Alex Kim Cloud Architect', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80' },
+  { name: 'Priya Sharma', role: 'Head of AI & Machine Learning', initials: 'PS', color: '#1a2e44', img: 'Professional portrait of Priya Sharma AI Head', photo: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&w=600&q=80' },
 ]
 </script>
 
@@ -23,7 +23,7 @@ const team = [
       <div class="team__grid">
         <div v-for="member in team" :key="member.name" class="team-card">
           <div class="team-card__img-wrap">
-            <img src="" :alt="member.img" class="team-card__img" />
+            <img :src="member.photo" :alt="member.img" class="team-card__img" />
             <div class="team-card__img-bg" :style="{ background: member.color }">
               <span class="team-card__initials">{{ member.initials }}</span>
             </div>
@@ -84,9 +84,13 @@ const team = [
 }
 
 .team-card__img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
+  z-index: 2;
 }
 
 .team-card__img-bg {
@@ -95,6 +99,7 @@ const team = [
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .team-card__initials {
@@ -114,6 +119,7 @@ const team = [
   justify-content: center;
   opacity: 0;
   transition: opacity 0.35s;
+  z-index: 3;
 }
 
 .team-card:hover .team-card__overlay {

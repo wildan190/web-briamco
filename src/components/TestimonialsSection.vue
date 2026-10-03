@@ -52,7 +52,7 @@ function next() {
   <section id="testimonials" class="testimonials">
     <!-- Background image area -->
     <div class="testimonials__bg">
-      <img src="" alt="High-tech enterprise datacenter and cloud facility" />
+      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80" alt="High-tech enterprise datacenter and cloud facility" />
       <div class="testimonials__bg-overlay"></div>
     </div>
 

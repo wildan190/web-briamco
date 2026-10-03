@@ -84,7 +84,7 @@ const stats = [
       <!-- Full-width image -->
       <div class="hero__image-wrap">
         <img
-          src=""
+          src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=1800&q=80"
           alt="Enterprise engineers and technology leads collaborating in modern development lab"
           class="hero__image"
         />
@@ -187,6 +187,8 @@ const stats = [
   gap: 0;
   align-items: center;
   padding: 72px 0 56px;
+  position: relative;
+  z-index: 3;
 }
 
 .hero__col-left {
@@ -336,6 +338,7 @@ const stats = [
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 1;
 }
 
 .hero__image-bg {
@@ -343,11 +346,12 @@ const stats = [
   inset: 0;
   background: linear-gradient(
     160deg,
-    #0d1b2a 0%,
-    #1a2e44 35%,
-    #1e3a5f 65%,
-    #0d1b2a 100%
+    rgba(13,27,42,0.72) 0%,
+    rgba(26,46,68,0.60) 40%,
+    rgba(30,58,95,0.50) 70%,
+    rgba(13,27,42,0.75) 100%
   );
+  z-index: 2;
 }
 
 /* ===== MARQUEE TICKER ===== */

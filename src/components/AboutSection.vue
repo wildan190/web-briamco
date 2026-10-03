@@ -13,12 +13,12 @@ const points = [
         <!-- Images mosaic -->
         <div class="about__visuals">
           <div class="about__img-main">
-            <img src="" alt="Software engineering team collaborating on distributed systems" class="about__img" />
+            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=900&q=80" alt="Software engineering team collaborating on distributed systems" class="about__img" />
             <div class="about__img-placeholder about__img-placeholder--1"></div>
           </div>
           <div class="about__img-secondary">
             <div class="about__img-sm-wrap">
-              <img src="" alt="Tech architects reviewing system design diagrams" class="about__img" />
+              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=80" alt="Tech architects reviewing system design diagrams" class="about__img" />
               <div class="about__img-placeholder about__img-placeholder--2"></div>
             </div>
             <div class="about__badge">
@@ -84,20 +84,24 @@ const points = [
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: relative;
+  z-index: 1;
 }
 
 .about__img-placeholder {
   position: absolute;
   inset: 0;
   border-radius: inherit;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .about__img-placeholder--1 {
-  background: linear-gradient(135deg, #1a2e44 0%, #1e3a5f 60%, #2a4a7a 100%);
+  background: linear-gradient(to bottom right, rgba(13,27,42,0.18) 0%, rgba(37,99,235,0.08) 100%);
 }
 
 .about__img-placeholder--2 {
-  background: linear-gradient(135deg, #0d1b2a 0%, #1a2e44 100%);
+  background: linear-gradient(to bottom right, rgba(13,27,42,0.22) 0%, rgba(30,58,95,0.10) 100%);
 }
 
 .about__img-secondary {

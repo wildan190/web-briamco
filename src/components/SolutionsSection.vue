@@ -8,6 +8,7 @@ const solutions = [
     desc: 'Rapidly architect, build, and iterate high-performance web and mobile platforms with automated testing, CI/CD, and cost-optimized cloud backends.',
     features: ['High-Velocity Product Engineering', 'Cloud-Native Container & Kubernetes Setup', 'Automated CI/CD & Quality Assurance', 'Elastic Cloud Architecture & Cost Optimization'],
     img: 'Startup engineering team pairing on new code releases',
+    photo: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80',
   },
   {
     label: 'Enterprise Scale',
@@ -15,6 +16,7 @@ const solutions = [
     desc: 'Comprehensive systems re-architecture, legacy monolith deconstruction, and multi-region cloud resilience engineered for high-concurrency enterprise workloads.',
     features: ['Zero-Downtime Cloud Migration & Multi-Cloud Strategy', 'Event-Driven Microservices Architecture', 'Enterprise Cybersecurity & SOC2 Hardening', 'AI Workflows & Private LLM Deployment'],
     img: 'Enterprise systems engineers monitoring distributed cloud metrics',
+    photo: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80',
   },
 ]
 
@@ -54,7 +56,7 @@ const currentTab = ref(0)
       >
         <div class="solutions__panel-grid">
           <div class="solutions__panel-img">
-            <img src="" :alt="sol.img" class="solutions__img" />
+            <img :src="sol.photo" :alt="sol.img" class="solutions__img" />
             <div class="solutions__img-placeholder"></div>
           </div>
           <div class="solutions__panel-text">
@@ -152,15 +154,20 @@ const currentTab = ref(0)
 }
 
 .solutions__img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 1;
 }
 
 .solutions__img-placeholder {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #0d1b2a 0%, #1e3a5f 100%);
+  background: linear-gradient(to bottom, rgba(13,27,42,0.06) 0%, rgba(13,27,42,0.40) 100%);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .solutions__panel-text {
