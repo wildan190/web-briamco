@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('FaqSection')
+
 import { ref } from 'vue'
 
-const faqs = [
+const faqs = useCmsField('FaqSection', 'faqs', [
   { q: 'What technologies and cloud stacks does BRIAMCO specialize in?', a: 'We specialize in modern cloud-native architectures across AWS, GCP, and Azure, utilizing Kubernetes, Docker, TypeScript, Vue, React, Go, Python, PostgreSQL, Snowflake, and enterprise AI/LLM orchestration frameworks.' },
   { q: 'How do you handle zero-downtime cloud migrations?', a: 'We leverage phased strangler fig migration patterns, automated schema replication, and dual-write strategies to modernize legacy monolithic systems without service disruption or data loss.' },
   { q: 'Do you collaborate with early-stage scaleups or only large enterprises?', a: 'We collaborate with both. For fast-growing scaleups, we provide agile product engineering and scalable foundations. For large enterprises, we deliver complex distributed systems, cloud migrations, and platform reliability engineering.' },
   { q: 'How do you ensure cybersecurity and regulatory compliance?', a: 'Security is embedded into every development phase (DevSecOps). We implement zero-trust access controls, continuous vulnerability scans, data masking, and strict compliance frameworks (SOC2, ISO 27001, GDPR, HIPAA).' },
   { q: 'Who retains intellectual property (IP) rights and source code?', a: 'You retain 100% full ownership of all proprietary code, infrastructure-as-code configurations, CI/CD pipelines, and architectural assets created during our engagement.' },
-]
+])
 
 const openIndex = ref<number | null>(0)
 
@@ -20,10 +23,10 @@ function toggle(i: number) {
   <section class="faq">
     <div class="container faq__inner">
       <div class="faq__header">
-        <span class="section-tag">Got Questions?</span>
-        <h2 class="section-title">Frequently Asked Questions</h2>
+        <span class="section-tag">{{ content.text1 }}</span>
+        <h2 class="section-title">{{ content.text2 }}</h2>
         <p class="section-subtitle">
-          Everything you need to know about partnering with BRIAMCO for engineering and tech solutions.
+          {{ content.text3 }}
         </p>
       </div>
 

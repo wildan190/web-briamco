@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('SolutionsSection')
+
 import { ref } from 'vue'
 
-const solutions = [
+const solutions = useCmsField('SolutionsSection', 'solutions', [
   {
     label: 'Startups & Scaleups',
     title: 'Agile Product & Engineering Acceleration',
@@ -18,7 +21,7 @@ const solutions = [
     img: 'Enterprise systems engineers monitoring distributed cloud metrics',
     photo: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80',
   },
-]
+])
 
 const currentTab = ref(0)
 </script>
@@ -27,10 +30,10 @@ const currentTab = ref(0)
   <section id="solutions" class="solutions">
     <div class="container">
       <div class="solutions__header">
-        <span class="section-tag">Tailored Solutions</span>
-        <h2 class="section-title">Architecting Systems for Scale</h2>
+        <span class="section-tag">{{ content.text1 }}</span>
+        <h2 class="section-title">{{ content.text2 }}</h2>
         <p class="section-subtitle">
-          Whatever your growth stage, we provide the architectural blueprints and engineering firepower to accelerate your tech roadmap.
+          {{ content.text3 }}
         </p>
       </div>
 
@@ -69,7 +72,7 @@ const currentTab = ref(0)
                 {{ f }}
               </li>
             </ul>
-            <a href="#contact" class="btn-primary" style="margin-top:8px;">Get Started</a>
+            <RouterLink to="/contact" class="btn-primary" style="margin-top:8px;">{{ content.text4 }}</RouterLink>
           </div>
         </div>
       </div>

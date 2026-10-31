@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('ServicesSection')
+
+import { ref, computed, watch } from 'vue'
+import { services, servicePath, slugify } from '../cms/pages'
 import AppIcon from './AppIcon.vue'
 
 interface ServiceItem {
@@ -11,6 +15,7 @@ interface ServiceItem {
   img2: string
   photo1: string
   photo2: string
+  slug?: string
 }
 
 const activeTab = ref(0)
@@ -42,7 +47,7 @@ const techPhotos = {
   gov2: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=700&q=80',
 }
 
-const tabs = [
+const originalTabs = useCmsField('ServicesSection', 'tabs', [
   {
     category: 'Enterprise',
     name: 'Cloud & Infrastructure',
@@ -174,49 +179,64 @@ const tabs = [
       },
     ],
   },
-]
+])
 
-const currentService = ref<ServiceItem>(tabs[0]!.services[0]!)
+const tabs = computed(() => {
+  if (!services.value.length) return originalTabs.value
+  const groups = [...new Set(services.value.map(service => service.group))]
+  return groups.map((group, groupIndex) => {
+    const tab = originalTabs.value.find(item => item.name === group) || originalTabs.value[groupIndex % originalTabs.value.length]!
+    const published = services.value.filter(service => service.group === group)
+    return { ...tab, name: group, count: String(published.length).padStart(2, '0'), services: published.map((service, index) => {
+      const visual = tab.services[index] || tab.services[0]!
+      return { ...visual, slug: service.slug, title: service.title, desc: service.description, features: service.features,
+        photo1: service.imageUrl || visual.photo1, img1: service.imageAlt || visual.img1 }
+    }) }
+  })
+})
+const currentService = computed<ServiceItem>(() => tabs.value[activeTab.value]?.services[currentSlideIndex.value] || tabs.value[0]!.services[0]!)
 const currentSlideIndex = ref(0)
+
+watch(tabs, () => {
+  if (activeTab.value >= tabs.value.length) activeTab.value = 0
+  if (currentSlideIndex.value >= tabs.value[activeTab.value]!.services.length) currentSlideIndex.value = 0
+})
 
 function selectTab(i: number) {
   activeTab.value = i
   currentSlideIndex.value = 0
-  currentService.value = tabs[i]!.services[0]!
 }
 
 function prevSlide() {
-  const services = tabs[activeTab.value]!.services
+  const services = tabs.value[activeTab.value]!.services
   currentSlideIndex.value = (currentSlideIndex.value - 1 + services.length) % services.length
-  currentService.value = services[currentSlideIndex.value]!
 }
 
 function nextSlide() {
-  const services = tabs[activeTab.value]!.services
+  const services = tabs.value[activeTab.value]!.services
   currentSlideIndex.value = (currentSlideIndex.value + 1) % services.length
-  currentService.value = services[currentSlideIndex.value]!
 }
 </script>
 
 <template>
-  <section id="services" class="services">
+  <section v-if="services.length" id="services" class="services">
     <div class="container">
 
       <!-- Header: 3-column -->
       <div class="services__header">
         <div class="services__header-left">
-          <span class="section-tag">Explore Our Service</span>
-          <h2 class="section-title">What We are Offering<br />to Our Potential Client</h2>
+          <span class="section-tag">{{ content.text1 }}</span>
+          <h2 class="section-title">{{ content.text2 }}<br />{{ content.text3 }}</h2>
         </div>
         <p class="services__header-desc">
-          We architect and deliver enterprise-grade tech solutions that address your most complex engineering challenges, from resilient cloud systems to cutting-edge AI.
+          {{ content.text4 }}
         </p>
-        <a href="#contact" class="services__header-btn">
-          <span>View All Services</span>
+        <RouterLink to="/contact" class="services__header-btn">
+          <span>{{ content.text5 }}</span>
           <div class="services__header-btn-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </a>
+        </RouterLink>
       </div>
 
       <!-- Tabs -->
@@ -231,7 +251,7 @@ function nextSlide() {
           <span class="services__tab-category">{{ tab.category }}</span>
           <div class="services__tab-bottom">
             <span class="services__tab-name">{{ tab.name }}</span>
-            <span class="services__tab-count">({{ tab.count }})</span>
+            <span class="services__tab-count">{{ content.text6 }}{{ tab.count }}{{ content.text7 }}</span>
           </div>
         </button>
       </div>
@@ -258,12 +278,12 @@ function nextSlide() {
 
           <!-- CTA + small image row -->
           <div class="services__panel-footer">
-            <a href="#contact" class="services__detail-btn">
-              <span>Service Details</span>
+            <RouterLink :to="servicePath(currentService.slug || slugify(currentService.title))" class="services__detail-btn">
+              <span>{{ content.text8 }}</span>
               <div class="services__detail-btn-icon">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-            </a>
+            </RouterLink>
             <div class="services__panel-img-sm">
               <img :src="currentService.photo1" :alt="currentService.img1" />
               <div class="services__panel-img-bg services__panel-img-bg--1"></div>
@@ -290,6 +310,7 @@ function nextSlide() {
 
     </div>
   </section>
+<section v-else class="services"><div class="container">No services published yet.</div></section>
 </template>
 
 <style scoped>

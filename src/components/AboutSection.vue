@@ -1,9 +1,12 @@
 <script setup lang="ts">
-const points = [
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('AboutSection')
+
+const points = useCmsField('AboutSection', 'points', [
   { title: 'Enterprise Engineering Excellence', desc: 'We engineer resilient, scalable platforms from the ground up, adhering to strict architectural best practices, clean code, and zero-downtime deployments.' },
   { title: 'Cloud-Native & Data-Driven', desc: 'Our cloud architectures and observability pipelines provide complete transparency into system latency, uptime, and high-throughput workloads.' },
   { title: 'Battle-Tested Tech Expertise', desc: 'With 15+ years of distributed systems and multi-cloud engineering, we bring proven frameworks tailored to high-growth tech companies and enterprises.' },
-]
+])
 </script>
 
 <template>
@@ -13,27 +16,27 @@ const points = [
         <!-- Images mosaic -->
         <div class="about__visuals">
           <div class="about__img-main">
-            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=900&q=80" alt="Software engineering team collaborating on distributed systems" class="about__img" />
+            <img :src="content.src1" :alt="content.alt2" class="about__img" />
             <div class="about__img-placeholder about__img-placeholder--1"></div>
           </div>
           <div class="about__img-secondary">
             <div class="about__img-sm-wrap">
-              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=80" alt="Tech architects reviewing system design diagrams" class="about__img" />
+              <img :src="content.src3" :alt="content.alt4" class="about__img" />
               <div class="about__img-placeholder about__img-placeholder--2"></div>
             </div>
             <div class="about__badge">
-              <span class="about__badge-num">15+</span>
-              <span class="about__badge-text">Years Tech Innovation</span>
+              <span class="about__badge-num">{{ content.text5 }}</span>
+              <span class="about__badge-text">{{ content.text6 }}</span>
             </div>
           </div>
         </div>
 
         <!-- Text -->
         <div class="about__text">
-          <span class="section-tag">About BRIAMCO</span>
-          <h2 class="section-title">Choose the Best Tech Partner<br />to Scale Your Architecture</h2>
+          <span class="section-tag">{{ content.text7 }}</span>
+          <h2 class="section-title">{{ content.text8 }}<br />{{ content.text9 }}</h2>
           <p class="section-subtitle" style="margin-bottom:32px;">
-            BRIAMCO is a premier technology solutions firm empowering enterprises to accelerate digital transformation, modernize legacy software, and deploy intelligent cloud-native platforms.
+            {{ content.text10 }}
           </p>
 
           <div class="about__points">
@@ -48,7 +51,7 @@ const points = [
             </div>
           </div>
 
-          <a href="#contact" class="btn-primary" style="margin-top:12px;">Build With Us</a>
+          <RouterLink to="/contact" class="btn-primary" style="margin-top:12px;">{{ content.text11 }}</RouterLink>
         </div>
       </div>
     </div>

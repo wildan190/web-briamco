@@ -1,10 +1,13 @@
 <script setup lang="ts">
-const team = [
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('TeamSection')
+
+const team = useCmsField('TeamSection', 'team', [
   { name: 'Jonathan Lee', role: 'Chief Technology Officer', initials: 'JL', color: '#0d1b2a', img: 'Executive portrait of Jonathan Lee CTO', photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80' },
   { name: 'Maria Santos', role: 'VP of Platform Engineering', initials: 'MS', color: '#1e3a5f', img: 'Professional portrait of Maria Santos VP Engineering', photo: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80' },
   { name: 'Alex Kim', role: 'Principal Cloud Architect', initials: 'AK', color: '#2563eb', img: 'Professional headshot of Alex Kim Cloud Architect', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80' },
   { name: 'Priya Sharma', role: 'Head of AI & Machine Learning', initials: 'PS', color: '#1a2e44', img: 'Professional portrait of Priya Sharma AI Head', photo: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&w=600&q=80' },
-]
+])
 </script>
 
 <template>
@@ -12,11 +15,11 @@ const team = [
     <div class="container">
       <div class="team__header">
         <div>
-          <span class="section-tag">Engineering Leadership</span>
-          <h2 class="section-title">Meet The Architects</h2>
+          <span class="section-tag">{{ content.text1 }}</span>
+          <h2 class="section-title">{{ content.text2 }}</h2>
         </div>
         <p class="section-subtitle">
-          Our technical directors bring decades of combined experience designing fault-tolerant distributed systems and mission-critical cloud backends.
+          {{ content.text3 }}
         </p>
       </div>
 
@@ -29,8 +32,8 @@ const team = [
             </div>
             <div class="team-card__overlay">
               <div class="team-card__socials">
-                <a href="#" aria-label="LinkedIn" class="team-card__social">in</a>
-                <a href="#" aria-label="Email" class="team-card__social">@</a>
+                <a href="#" aria-label="LinkedIn" class="team-card__social">{{ content.text4 }}</a>
+                <a href="#" aria-label="Email" class="team-card__social">{{ content.text5 }}</a>
               </div>
             </div>
           </div>

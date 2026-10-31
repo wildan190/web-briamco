@@ -1,42 +1,17 @@
 <script setup lang="ts">
+import { t } from '../i18n'
+
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('BlogSection')
+
 import AppIcon from './AppIcon.vue'
 
-interface Article {
-  id: number
-  badge: string
-  author: string
-  title: string
-  excerpt: string
-  day: string
-  month: string
-  img: string
-  alt: string
-}
-
-const articles: Article[] = [
-  {
-    id: 1,
-    badge: 'Cloud Architecture',
-    author: 'Post By Architecture Lead',
-    title: 'Migrating Monoliths to Event-Driven Microservices at Enterprise Scale',
-    excerpt: 'Key strategies, patterns, and pitfall prevention for transitioning mission-critical transactional systems without customer downtime.',
-    day: '18',
-    month: 'Sept',
-    img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80',
-    alt: 'Software engineers reviewing cloud architecture diagrams',
-  },
-  {
-    id: 2,
-    badge: 'AI & Data Engineering',
-    author: 'Post By AI Research Team',
-    title: 'Deploying Production-Grade Enterprise RAG & Secure LLM Pipelines',
-    excerpt: 'How modern engineering teams manage private vector databases, reduce hallucinations, and enforce strict token privacy guardrails.',
-    day: '24',
-    month: 'Sept',
-    img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=80',
-    alt: 'Data scientists discussing machine learning pipeline benchmarks',
-  },
-]
+import { computed } from 'vue'
+import { insightPath, type Insight } from '../cms/pages'
+import defaults from '../cms/defaults.json'
+const props = defineProps<{ posts?: Insight[] }>()
+const homepageArticles = useCmsField<Insight[]>('BlogSection', 'articles', defaults.BlogSection.articles as Insight[])
+const articles = computed(() => props.posts ?? homepageArticles.value)
 </script>
 
 <template>
@@ -45,22 +20,22 @@ const articles: Article[] = [
       <div class="blog-grid">
         <!-- Left Column: Heading & CTA -->
         <div class="blog__intro">
-          <p class="blog__label">TECH INSIGHTS &amp; ENGINEERING</p>
+          <p class="blog__label">{{ content.text1 }}</p>
           <h2 class="blog__headline">
-            Check Out Latest<br />Tech Updates &amp;<br />Articles
+            {{ content.text2 }}<br />{{ content.text3 }}<br />{{ content.text4 }}
           </h2>
 
           <div class="blog__divider" aria-hidden="true"></div>
 
           <p class="blog__desc">
-            Stay ahead of the curve with deep architectural insights, cloud benchmarks, and enterprise engineering practices.
+            {{ content.text5 }}
           </p>
 
           <div class="blog__cta-group">
-            <a href="#blog" class="blog__cta-pill">See All Blog</a>
-            <a href="#blog" class="blog__cta-circle" aria-label="See all blog posts">
+            <RouterLink to="/insight" class="blog__cta-pill">{{ content.text6 }}</RouterLink>
+            <RouterLink to="/insight" class="blog__cta-circle" :aria-label="t('See all blog posts')">
               <AppIcon name="arrow-up-right" :size="17" />
-            </a>
+            </RouterLink>
           </div>
         </div>
 
@@ -96,7 +71,7 @@ const articles: Article[] = [
 
               <!-- Title -->
               <h3 class="blog-card__title">
-                <a href="#blog">{{ post.title }}</a>
+                <RouterLink :to="insightPath(post)">{{ post.title }}</RouterLink>
               </h3>
 
               <!-- Subtle Divider Line -->
@@ -107,10 +82,10 @@ const articles: Article[] = [
 
               <!-- Read More Button + Arrow Circle -->
               <div class="blog-card__action">
-                <a href="#blog" class="blog-card__btn-pill">Read More</a>
-                <a href="#blog" class="blog-card__btn-circle" aria-label="Read article">
+                <RouterLink :to="insightPath(post)" class="blog-card__btn-pill">{{ content.text7 }}</RouterLink>
+                <RouterLink :to="insightPath(post)" class="blog-card__btn-circle" :aria-label="t('Read article')">
                   <AppIcon name="arrow-up-right" :size="15" />
-                </a>
+                </RouterLink>
               </div>
             </div>
           </article>

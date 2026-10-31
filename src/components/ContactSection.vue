@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { t } from '../i18n'
+
+import { useCmsSection } from '../cms/content'
+const content = useCmsSection('ContactSection')
+
 import { ref } from 'vue'
+import { submitInquiry } from '../cms/content'
 import AppIcon from './AppIcon.vue'
 
 const form = ref({
@@ -10,17 +16,26 @@ const form = ref({
 })
 
 const submitted = ref(false)
+const reference = ref('')
 const loading = ref(false)
 
-function handleSubmit() {
+const submitError = ref('')
+async function handleSubmit() {
+  if (loading.value) return
   loading.value = true
-  setTimeout(() => {
-    loading.value = false
+  submitError.value = ''
+  try {
+    reference.value = await submitInquiry(form.value)
     submitted.value = true
-  }, 1000)
+  } catch (error) {
+    submitError.value = error instanceof Error ? error.message : 'Please try again.'
+  } finally {
+    loading.value = false
+  }
 }
 
 function handleReset() {
+  reference.value = ''
   form.value = {
     name: '',
     email: '',
@@ -38,8 +53,8 @@ function handleReset() {
       <!-- Left Photo Background with Grayscale Business Meeting -->
       <div class="consultation__photo-bg">
         <img
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
-          alt="Diverse corporate leadership team reviewing business strategy on laptop"
+          :src="content.src1"
+          :alt="content.alt2"
           class="consultation__img"
         />
         <div class="consultation__photo-overlay"></div>
@@ -56,10 +71,10 @@ function handleReset() {
         <div class="consultation__left-col">
           <!-- Glassmorphism Card (Over the photo) -->
           <div class="consultation__glass-card">
-            <p class="consultation__tag">NEED TECH CONSULTATION?</p>
+            <p class="consultation__tag">{{ content.text3 }}</p>
             <h2 class="consultation__title">
-              Ready to Modernize Your Stack?<br />
-              Let’s Discuss Your Engineering Goals
+              {{ content.text4 }}<br />
+              {{ content.text5 }}
             </h2>
           </div>
 
@@ -67,14 +82,14 @@ function handleReset() {
           <div class="consultation__info-row">
             <!-- Address -->
             <div class="consultation__info-block">
-              <span class="consultation__info-heading">Address</span>
+              <span class="consultation__info-heading">{{ content.text6 }}</span>
               <div class="consultation__info-body">
                 <div class="consultation__check-badge" aria-hidden="true">
                   <AppIcon name="check" :size="12" :stroke-width="2.8" />
                 </div>
                 <div class="consultation__info-text">
-                  <p>1901 Thornridge Cir. Shiloh,</p>
-                  <p>Hawaii 81063</p>
+                  <p>{{ content.text7 }}</p>
+                  <p>{{ content.text8 }}</p>
                 </div>
               </div>
             </div>
@@ -84,14 +99,14 @@ function handleReset() {
 
             <!-- Contact -->
             <div class="consultation__info-block">
-              <span class="consultation__info-heading">Contact</span>
+              <span class="consultation__info-heading">{{ content.text9 }}</span>
               <div class="consultation__info-body">
                 <div class="consultation__check-badge" aria-hidden="true">
                   <AppIcon name="check" :size="12" :stroke-width="2.8" />
                 </div>
                 <div class="consultation__info-text">
-                  <a href="mailto:solutions@briamco.com">solutions@briamco.com</a>
-                  <a href="tel:+6295550129">+629 555-0129</a>
+                  <a :href="content.href10">{{ content.text11 }}</a>
+                  <a :href="content.href12">{{ content.text13 }}</a>
                 </div>
               </div>
             </div>
@@ -106,29 +121,30 @@ function handleReset() {
               <div class="consultation__success-icon">
                 <AppIcon name="check-circle" :size="54" :stroke-width="1.8" />
               </div>
-              <h3 class="consultation__form-title">Consultation Requested!</h3>
+              <h3 class="consultation__form-title">{{ content.text14 }}</h3>
               <p class="consultation__success-desc">
-                Thank you, <strong>{{ form.name || 'Valued Partner' }}</strong>. Our senior cloud architects and engineering directors will review your technical requirements and connect within 24 hours.
+                {{ content.text15 }} <strong>{{ form.name || t('Valued Partner') }}</strong>{{ content.text16 }}
               </p>
+              <p v-if="reference" class="consultation__success-desc">{{ t('Request reference') }}: <strong>{{ reference }}</strong></p>
               <button type="button" class="consultation__submit-pill" @click="handleReset">
-                Send Another Request
+                {{ content.text17 }}
               </button>
             </div>
 
             <!-- Normal Form State -->
             <div v-else>
-              <h3 class="consultation__form-title">Schedule a Tech Architecture Call</h3>
+              <h3 class="consultation__form-title">{{ content.text18 }}</h3>
 
               <!-- Features checklist row -->
               <div class="consultation__features">
                 <span class="consultation__feature-item">
-                  <span class="consultation__feature-check">✓</span> Principal Architects
+                  <span class="consultation__feature-check">✓</span> {{ content.text19 }}
                 </span>
                 <span class="consultation__feature-item">
-                  <span class="consultation__feature-check">✓</span> Scalable Tech Roadmap
+                  <span class="consultation__feature-check">✓</span> {{ content.text20 }}
                 </span>
                 <span class="consultation__feature-item">
-                  <span class="consultation__feature-check">✓</span> Rapid Delivery
+                  <span class="consultation__feature-check">✓</span> {{ content.text21 }}
                 </span>
               </div>
 
@@ -140,7 +156,7 @@ function handleReset() {
                     <input
                       v-model="form.name"
                       type="text"
-                      placeholder="Your Name"
+                      :placeholder="content.placeholder22"
                       required
                       class="consultation__input"
                     />
@@ -149,7 +165,7 @@ function handleReset() {
                     <input
                       v-model="form.email"
                       type="email"
-                      placeholder="Email"
+                      :placeholder="content.placeholder23"
                       required
                       class="consultation__input"
                     />
@@ -161,7 +177,7 @@ function handleReset() {
                   <input
                     v-model="form.subject"
                     type="text"
-                    placeholder="Subject"
+                    :placeholder="content.placeholder24"
                     required
                     class="consultation__input"
                   />
@@ -171,13 +187,14 @@ function handleReset() {
                 <div class="consultation__field">
                   <textarea
                     v-model="form.message"
-                    placeholder="Write a Message"
+                    :placeholder="content.placeholder25"
                     rows="4"
                     required
                     class="consultation__textarea"
                   ></textarea>
                 </div>
 
+                <p v-if="submitError" role="alert">{{ submitError }}</p>
                 <!-- Action Button: Pill + Circle Arrow -->
                 <div class="consultation__action">
                   <button
@@ -185,7 +202,7 @@ function handleReset() {
                     class="consultation__submit-pill"
                     :disabled="loading"
                   >
-                    {{ loading ? 'Sending...' : 'Submit Request' }}
+                    {{ loading ? t('Sending...') : t('Submit Request') }}
                   </button>
                   <button
                     type="submit"

@@ -1,18 +1,21 @@
 <script setup lang="ts">
-const marqueeItems = [
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('HeroSection')
+
+const marqueeItems = useCmsField('HeroSection', 'marqueeItems', [
   'Enterprise Architecture. Resilient Systems.',
   'Scalable Cloud Platforms. Intelligent AI.',
   'Modernize Your Digital Infrastructure',
   'High-Performance Engineering Teams',
   'Powering Next-Gen Global Enterprises',
-]
+])
 
-const stats = [
+const stats = useCmsField('HeroSection', 'stats', [
   { value: '1,200+', label: 'Enterprise tech solutions and cloud architectures deployed globally.' },
   { value: '99.99%', label: 'Uptime reliability achieved across mission-critical client infrastructure.' },
   { value: '4.8x', label: 'Average acceleration in deployment speed and developer productivity.' },
   { value: '150+', label: 'Senior tech leads, cloud architects, and AI research engineers.' },
-]
+])
 </script>
 
 <template>
@@ -20,20 +23,20 @@ const stats = [
   <div class="topbar">
     <div class="container topbar__inner">
       <div class="topbar__left">
-        <a href="mailto:hello@briamco.com" class="topbar__item">
+        <a :href="content.href1" class="topbar__item">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          hello@briamco.com
+          {{ content.text2 }}
         </a>
         <span class="topbar__dot">•</span>
-        <a href="#contact" class="topbar__item">
+        <RouterLink to="/contact" class="topbar__item">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Jl. Sudirman No. 123, Jakarta Pusat
-        </a>
+          {{ content.text3 }}
+        </RouterLink>
       </div>
       <div class="topbar__right">
         <span class="topbar__item">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Mon–Fri, 08:00–17:00 WIB
+          {{ content.text4 }}
         </span>
       </div>
     </div>
@@ -47,9 +50,9 @@ const stats = [
       <div class="hero__text-row">
         <!-- Left: label + headline -->
         <div class="hero__col-left">
-          <p class="hero__label">NEXT-GENERATION TECH SOLUTIONS</p>
+          <p class="hero__label">{{ content.text5 }}</p>
           <h1 class="hero__headline">
-            Empowering Enterprises<br />with Modern Technology
+            {{ content.text6 }}<br />{{ content.text7 }}
           </h1>
         </div>
 
@@ -59,23 +62,23 @@ const stats = [
         <!-- Right: description + CTA + social proof -->
         <div class="hero__col-right">
           <p class="hero__desc">
-            We engineer enterprise-grade software, resilient cloud architectures, and intelligent AI solutions that transform businesses. Partner with our engineering experts to accelerate your digital advantage.
+            {{ content.text8 }}
           </p>
           <div class="hero__cta-row">
-            <a href="#contact" class="hero__cta-btn">
-              <span>Schedule A Tech Consultation</span>
+            <RouterLink to="/contact" class="hero__cta-btn">
+              <span>{{ content.text9 }}</span>
               <div class="hero__cta-icon">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-            </a>
+            </RouterLink>
             <div class="hero__reviews">
               <div class="hero__avatars">
-                <div class="hero__avatar" style="background:#2563eb;">JL</div>
-                <div class="hero__avatar" style="background:#1e3a5f;">MS</div>
-                <div class="hero__avatar" style="background:#0d1b2a;">AK</div>
+                <div class="hero__avatar" style="background:#2563eb;">{{ content.text10 }}</div>
+                <div class="hero__avatar" style="background:#1e3a5f;">{{ content.text11 }}</div>
+                <div class="hero__avatar" style="background:#0d1b2a;">{{ content.text12 }}</div>
                 <div class="hero__avatar hero__avatar--plus">+</div>
               </div>
-              <p class="hero__reviews-text">Based on 200+ Enterprise Reviews</p>
+              <p class="hero__reviews-text">{{ content.text13 }}</p>
             </div>
           </div>
         </div>
@@ -84,8 +87,8 @@ const stats = [
       <!-- Full-width image -->
       <div class="hero__image-wrap">
         <img
-          src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=1800&q=80"
-          alt="Enterprise engineers and technology leads collaborating in modern development lab"
+          :src="content.src14"
+          :alt="content.alt15"
           class="hero__image"
         />
         <div class="hero__image-bg"></div>

@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('CtaBanner')
+
 import AppIcon from './AppIcon.vue'
 
-const stats = [
+const stats = useCmsField('CtaBanner', 'stats', [
   { value: '1,200+', label: 'Systems Deployed', icon: 'folder' },
   { value: '99.99%', label: 'Infrastructure Uptime', icon: 'star' },
   { value: '150+', label: 'Senior Engineers', icon: 'briefcase' },
   { value: '500+', label: 'Enterprise APIs', icon: 'building' },
-]
+])
 </script>
 
 <template>
@@ -17,17 +20,17 @@ const stats = [
 
     <div class="container cta-banner__inner">
       <div class="cta-banner__text">
-        <span class="section-tag" style="color:#7eb3ff;">Ready to Transform?</span>
+        <span class="section-tag" style="color:#7eb3ff;">{{ content.text1 }}</span>
         <h2 class="section-title light">
-          Architecting High-Scale<br />
-          Systems For Your Future
+          {{ content.text2 }}<br />
+          {{ content.text3 }}
         </h2>
         <p class="section-subtitle light">
-          Partner with BRIAMCO and experience the difference senior tech engineering brings to your uptime, velocity, and enterprise scalability.
+          {{ content.text4 }}
         </p>
         <div class="cta-banner__actions">
-          <a href="#contact" class="btn-primary">Schedule Consultation</a>
-          <a href="#services" class="btn-outline">Explore Solutions</a>
+          <RouterLink to="/contact" class="btn-primary">{{ content.text5 }}</RouterLink>
+          <RouterLink to="/services" class="btn-outline">{{ content.text6 }}</RouterLink>
         </div>
       </div>
 

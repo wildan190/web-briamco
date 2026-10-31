@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { useCmsSection, useCmsField } from '../cms/content'
+const content = useCmsSection('TestimonialsSection')
+
 import { ref } from 'vue'
 import AppIcon from './AppIcon.vue'
 
-const testimonials = [
+const testimonials = useCmsField('TestimonialsSection', 'testimonials', [
   {
     name: 'Sarah Mitchell',
     role: 'VP of Engineering, FinScale Systems',
@@ -35,16 +38,16 @@ const testimonials = [
     initials: 'RW',
     color: '#1e3a5f',
   },
-]
+])
 
 const current = ref(0)
 
 function prev() {
-  current.value = (current.value - 1 + testimonials.length) % testimonials.length
+  current.value = (current.value - 1 + testimonials.value.length) % testimonials.value.length
 }
 
 function next() {
-  current.value = (current.value + 1) % testimonials.length
+  current.value = (current.value + 1) % testimonials.value.length
 }
 </script>
 
@@ -52,16 +55,16 @@ function next() {
   <section id="testimonials" class="testimonials">
     <!-- Background image area -->
     <div class="testimonials__bg">
-      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80" alt="High-tech enterprise datacenter and cloud facility" />
+      <img :src="content.src1" :alt="content.alt2" />
       <div class="testimonials__bg-overlay"></div>
     </div>
 
     <div class="container testimonials__inner">
       <div class="testimonials__left">
-        <span class="section-tag" style="color:#7eb3ff;">Client Stories</span>
-        <h2 class="section-title light">What Tech Leaders Say About Partnering With Us</h2>
+        <span class="section-tag" style="color:#7eb3ff;">{{ content.text3 }}</span>
+        <h2 class="section-title light">{{ content.text4 }}</h2>
         <p class="section-subtitle light" style="margin-bottom:36px;">
-          We measure our engineering impact by the uptime, scalability, and developer velocity of the platforms we empower.
+          {{ content.text5 }}
         </p>
         <div class="testimonials__nav">
           <button class="testimonials__nav-btn" @click="prev" aria-label="Previous testimonial">
