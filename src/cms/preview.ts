@@ -16,7 +16,7 @@ export function previewToken(): string {
 }
 export function contentUrl(url: string): string {
   const token = previewToken()
-  const target = new URL(url)
+  const target = new URL(url, window.location.origin)
   target.searchParams.set('locale', locale.value)
   if (!token) return target.href
   target.searchParams.set('preview', token)
